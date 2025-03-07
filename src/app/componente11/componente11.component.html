@@ -1,0 +1,76 @@
+<form ngSubmit="cadastrar()" [formGroup]="formulario">
+
+  <!-- NOME -->
+  <div *ngIf="formulario.get('nome').hasError('required') && formulario.get('nome').touched">
+    <p class="alert alert-warning">
+      Preencha esse campo.
+    </p>
+  </div>
+  <div *ngIf="formulario.get('nome').hasError('minlength') && formulario.get('nome').touched">
+    <p class="alert alert-warning">
+      Minímo de 3 caracteres.
+    </p>
+  </div>
+  <input type="text" formControlName="nome" placeholder="Nome" class="form-control">
+
+  <!-- IDADE -->
+  <div *ngIf="formulario.get('idade').hasError('required') && formulario.get('idade').touched">
+      <p class="alert alert-warning">
+        Preencha esse campo.
+      </p>
+    </div>
+    <div *ngIf="formulario.get('idade').hasError('min') && formulario.get('idade').touched">
+      <p class="alert alert-warning">
+        Idade mínima de 1 ano.
+      </p>
+    </div>
+    <div *ngIf="formulario.get('idade').hasError('max') && formulario.get('idade').touched">
+      <p class="alert alert-warning">
+          Idade máxima de 120 ano.
+       </p>
+    </div>
+  <input type="number" formControlName="idade" placeholder="Idade" class="form-control">
+
+  <!-- CIDADE -->
+  <div *ngIf="formulario.get('cidade').hasError('required') && formulario.get('cidade').touched">
+      <p class="alert alert-warning">
+        Preencha esse campo.
+      </p>
+    </div>
+    <div *ngIf="formulario.get('cidade').hasError('minlength') && formulario.get('cidade').touched">
+      <p class="alert alert-warning">
+        Minímo de 3 caracteres.
+      </p>
+    </div>
+  <input type="text" formControlName="cidade" placeholder="Cidade" class="form-control">
+
+  <input *ngIf='!editar' type="button" value="Cadastrar" class="btn btn-primary" [disabled]='formulario.invalid' (click)="cadastrar()">
+  <span *ngIf='editar'>
+    <input type="button" value="Alterar" class="btn btn-primary" [disabled]='formulario.invalid' (click)="alterar()">
+    <input type="button" value="Remover" class="btn btn-primary" (click)="remover()">
+    <input  type="button" value="Cancelar" class="btn btn-primary" (click)="cancelar()">
+  </span>
+
+</form>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>#</th>
+      <th>Nome</th>
+      <th>Idade</th>
+      <th>Cidade</th>
+      <th>Selecionar</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let pessoa of vetor; index as indice">
+      <td>{{indice+1}}</td>
+      <td>{{pessoa.nome}}</td>
+      <td>{{pessoa.idade}}</td>
+      <td>{{pessoa.cidade}}</td>
+      <td><button class="btn btn-primary" (click)="selecionar(indice)">Selecionar</button></td>
+
+    </tr>
+  </tbody>
+</table>

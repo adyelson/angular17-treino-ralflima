@@ -1,0 +1,52 @@
+
+<!--
+
+
+1º Implemente uma filtragem através do nome do produto.
+Ao digitar, selecione apenas os produtos que contenham determinado termo.
+
+2º Não deixe cadastrar produtos de mesmo nome.
+
+3º Ocultar o campo que exibe o id.
+
+-->
+
+<!-- FORMULÁRIO -->
+<form [formGroup]="formulario">
+  <input *ngIf="editar" type="number" class="form-control" formControlName="id" readonly >
+  <input type="text"   class="form-control" formControlName="nome" placeholder="Nome">
+  <input type="number" class="form-control" formControlName="valor" placeholder="Valor">
+
+  <input *ngIf="!editar" (click)="cadastrar()" type="button" class="btn btn-primary" value="Cadastrar">
+  <input *ngIf="editar" (click)="alterar()" type="button" class="btn btn-primary" value="Alterar">
+  <input *ngIf="editar" (click)="remover()" type="button" class="btn btn-primary" value="Remover">
+  <p *ngIf="arquivoDuplicado.length>0"> Item já cadastrado!</p>
+</form>
+<!-- FILTRO -->
+<div class="filtro">
+
+  <input type="text" [(ngModel)]="searchTerm" (input)="filtrar()" placeholder="Pesquisar...">
+</div>
+
+
+<!-- TABELA -->
+<table class="table table-striped">
+  <thead>
+      <tr>
+          <th>#</th>
+          <th>Nome</th>
+          <th>Valor</th>
+          <th>Selecionar</th>
+      </tr>
+  </thead>
+
+  <tbody>
+      <tr *ngFor="let produto of filteredItems; index as indice">
+          <td>{{indice+1}} </td>
+          <td>{{produto.nome}} </td>
+          <td>{{produto.valor}} </td>
+          <td><button class="btn btn-primary" (click)="selecionarProduto(indice)"> Selecionar </button></td>
+
+      </tr>
+  </tbody>
+</table>
